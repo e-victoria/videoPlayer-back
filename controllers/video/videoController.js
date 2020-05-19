@@ -22,7 +22,19 @@ getMovieByTitleAndDescription = (app) => {
     })
 };
 
+getMovieByID = (app) => {
+    app.get('/movie/:id', (req, res) => {
+        function getData(result) {
+            res.send(JSON.stringify(result[0]));
+            res.status(200).end();
+        }
+        const id = req.originalUrl.split("/").pop();
+        dbController.getFromDb(`SELECT * FROM videos WHERE video_id = ${id};`, getData);
+    })
+};
+
 module.exports = {
     getMoviesList: getMoviesList,
-    getMovieByTitleAndDescription: getMovieByTitleAndDescription
+    getMovieByTitleAndDescription: getMovieByTitleAndDescription,
+    getMovieById: getMovieByID
 };
