@@ -21,10 +21,9 @@ async function getFromDb(query, callback) {
 }
 
 async function saveToDB(query, callback) {
-    console.log(query)
     pool.query(query, (error, results) => {
         if (error) {
-            throw error
+            throw error;
         } else {
             callback('ok');
         }
