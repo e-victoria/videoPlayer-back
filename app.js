@@ -10,6 +10,7 @@ let signInController = require('./controllers/login/signInController');
 
 videoController.getMoviesList(app);
 videoController.getMovieByTitleAndDescription(app);
+videoController.saveNewVideo(app);
 videoController.getMovieById(app);
 signUpController.registerUser(app);
 signInController.checkUser(app);

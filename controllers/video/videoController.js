@@ -1,4 +1,5 @@
 const dbController = require('../dbConnection');
+const bodyParser = require("body-parser");
 
 getMoviesList = (app) => {
     app.get('/movies', (req, res) => {
@@ -33,8 +34,25 @@ getMovieByID = (app) => {
     })
 };
 
+saveNewVideo = (app) => {
+    app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded({
+        extended: true
+    }));
+
+    app.post('/new-video/upload', (req, res) => {
+        const sendResponse = (response) => {
+            res.send(JSON.stringify(response));
+            res.status(200).end();
+        }
+
+        dbController.saveToDB(`INSERT INTO videos(video_title, video_description, url, video_thumbnail) VALUES('${req.body['video_title']}', '${req.body['video_description']}', '${req.body['url']}', '${req.body['video_thumbnail']}');`, sendResponse);
+    })
+}
+
 module.exports = {
     getMoviesList: getMoviesList,
     getMovieByTitleAndDescription: getMovieByTitleAndDescription,
-    getMovieById: getMovieByID
+    getMovieById: getMovieByID,
+    saveNewVideo: saveNewVideo
 };
